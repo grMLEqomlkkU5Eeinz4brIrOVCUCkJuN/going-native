@@ -1,0 +1,42 @@
+# Build outputs
+dist/
+build/
+*.node
+
+# Generated API docs (TypeDoc). The hand-written guides in docs/*.md are
+# committed; only the generated reference under docs/api/ is ignored.
+docs/api/
+
+# Tooling caches / packs
+.eslintcache
+*.tgz
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Environment
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+INTERNAL/

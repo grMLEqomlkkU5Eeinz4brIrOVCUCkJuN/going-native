@@ -1,0 +1,15 @@
+{
+	// Editor-discoverable config for test/. The TypeScript language server only
+	// auto-loads files named `tsconfig.json`, so without this the test sources
+	// land in an inferred project (no @types/node or jest, wrong module mode) and
+	// the IDE flags phantom errors. The CLI is unaffected because
+	// `npm run typecheck:test` points tsc straight at tsconfig.test.json.
+	//
+	// Settings (noEmit, nodenext modules, node + jest types) are inherited from the
+	// same test config the CLI uses, keeping one source of truth.
+	"extends": "../tsconfig.test.json",
+	"compilerOptions": {
+		"rootDir": "."
+	},
+	"include": ["**/*.ts"]
+}

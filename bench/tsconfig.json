@@ -1,0 +1,15 @@
+{
+	// Editor-discoverable config for bench/. The TypeScript language server only
+	// auto-loads files named `tsconfig.json`, so without this the bench sources
+	// land in an inferred project (no @types/node, wrong module mode) and the IDE
+	// flags phantom errors like "Cannot find name 'process'". The CLI is unaffected
+	// because `npm run typecheck:test` points tsc straight at tsconfig.test.json.
+	//
+	// Settings (noEmit, nodenext modules, node types) are inherited from the same
+	// test config the CLI uses, keeping one source of truth.
+	"extends": "../tsconfig.test.json",
+	"compilerOptions": {
+		"rootDir": "."
+	},
+	"include": ["**/*.ts"]
+}

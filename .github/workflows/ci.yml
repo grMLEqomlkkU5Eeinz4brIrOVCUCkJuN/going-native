@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main, dev]
+    paths-ignore:
+      - "**.md"
+  pull_request:
+    branches: [master, main]
+    paths-ignore:
+      - "**.md"
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build & Test (${{ matrix.os }}, node ${{ matrix.node-version }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [24.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build (native addon + TypeScript)
+        run: npm run build
+
+      - name: Typecheck tests + benchmark
+        run: npm run typecheck:test
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check C++ formatting
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '22.x'
+        run: |
+          find . \( -path ./node_modules -o -path ./build \) -prune -o \
+            \( -name "*.cc" -o -name "*.cpp" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" \) -print \
+            | xargs --no-run-if-empty clang-format --dry-run --Werror
+
+      - name: Generate API docs
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '22.x'
+        run: npm run docs
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '22.x'
+        with:
+          name: dist
+          path: |
+            dist/
+            build/Release/

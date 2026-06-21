@@ -1,0 +1,25 @@
+{
+	// Two consumers, one config:
+	//   - ts-jest compiles each .test.ts in-memory against this (it never emits).
+	//   - `npm run typecheck:test` runs `tsc --noEmit` over the test + bench
+	//     sources so the TypeScript is validated outside the Jest run too
+	//     (node --experimental-strip-types runs the bench but does NOT type-check).
+	// Tests import the built ESM from dist/, exercising the public types exactly
+	// as a consumer would. Module settings are inherited (nodenext) so the dist
+	// ESM loads as in production; ts-jest's hybrid-module advisory is suppressed
+	// in jest.config.js rather than by dropping to isolatedModules (which would
+	// disable type-checking).
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": ["node", "jest"],
+		"declaration": false,
+		"declarationMap": false,
+		"noEmit": true,
+		// bench/ modules import sibling .ts files directly (run via
+		// `node --experimental-strip-types`, never compiled), so the type-check
+		// must permit explicit .ts specifiers. Safe under noEmit.
+		"allowImportingTsExtensions": true
+	},
+	"include": ["test/**/*.ts", "bench/**/*.ts"]
+}

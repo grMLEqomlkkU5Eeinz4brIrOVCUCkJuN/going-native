@@ -1,0 +1,21 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": ["lib/index.ts"],
+	"out": "docs/api",
+	"includeVersion": true,
+	"excludePrivate": true,
+	"excludeInternal": true,
+	"readme": "README.md",
+	"projectDocuments": [
+		"docs/getting-started.md",
+		"docs/configuration.md",
+		"docs/marshalling-tiers.md",
+		"docs/ingestion.md",
+		"docs/persistence.md",
+		"docs/internals.md",
+		"docs/roadmap.md"
+	],
+	"navigationLinks": {
+		"Guide": "https://github.com/grml/thothfilter/tree/master/docs"
+	}
+}
