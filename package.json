@@ -46,8 +46,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@commitlint/config-conventional": "^21.0.2",
     "@commitlint/cli": "^21.0.2",
-    "@commitlint/config-conventional": "^20.1.0",
     "@eslint/js": "^10.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.9.4",
