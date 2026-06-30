@@ -61,7 +61,7 @@
     "ts-jest": "^29.4.11",
     "typedoc": "^0.28.14",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.62.0"
+    "typescript-eslint": "^8.62.1"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0"
