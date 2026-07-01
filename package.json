@@ -47,7 +47,7 @@
   "description": "",
   "devDependencies": {
     "@commitlint/config-conventional": "^21.0.2",
-    "@commitlint/cli": "^21.0.2",
+    "@commitlint/cli": "^21.2.0",
     "@eslint/js": "^10.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.0.1",
